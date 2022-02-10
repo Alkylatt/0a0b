@@ -136,11 +136,24 @@ function add_record(nums, check_result) {
     let newRow = record.appendChild(document.createElement("div"));
     for(let i=0;i < nums.length;i++) {
         let newBlock = newRow.appendChild(document.createElement("div"));
-        if(check_result[i] === 'A') newBlock.className = "A";
-        else if(check_result[i] === 'B') newBlock.className = "B";
-        else if(check_result[i] === '-') newBlock.className = "wrong";
         newBlock.innerText = nums[i];
     }
+    let newBlock = newRow.appendChild(document.createElement("div"));
+    newBlock.className = "wrong";
+
+    newBlock = newRow.appendChild(document.createElement("div"));
+    newBlock.className = (check_result[0] !== 0) ? "A" : "wrong";
+    newBlock.innerText = check_result[0];
+    newBlock = newRow.appendChild(document.createElement("div"));
+    newBlock.className = (check_result[0] !== 0) ? "A" : "wrong";
+    newBlock.innerText = 'A';
+
+    newBlock = newRow.appendChild(document.createElement("div"));
+    newBlock.className = (check_result[1] !== 0) ? "B" : "wrong";
+    newBlock.innerText = check_result[1];
+    newBlock = newRow.appendChild(document.createElement("div"));
+    newBlock.className = (check_result[1] !== 0) ? "B" : "wrong";
+    newBlock.innerText = 'B';
 }
 
 
@@ -224,7 +237,7 @@ function check_answer(guess) {
     res[1][0] = a;
     res[1][1] = b;
 
-    add_record(guess, res[0]);
+    add_record(guess, res[1]);
     if(a === numbers_to_guess) {
         gameover();
     }
