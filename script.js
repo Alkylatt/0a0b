@@ -1,3 +1,77 @@
+let allow_dupes = false; // whether or not to allow duplicate digits in the answer
+let numbers_to_guess = 4; // number of numbers to guess
+
+// Inefficient code of radio like settings buttons stuff
+function settings_dupe(allowDupe) {
+    let btn = document.querySelectorAll('#settings_dupe span');
+    if(allowDupe) {
+        btn[0].classList.add('selected');
+        btn[1].classList.remove('selected');
+        allow_dupes = true;
+    }else {
+        btn[1].classList.add('selected');
+        btn[0].classList.remove('selected');
+        allow_dupes = false;
+    }
+}
+
+function settings_digits(digits) {
+    let btn = document.querySelectorAll('#settings_digits span');
+    for(let i=0;i < 6;i++) {
+        btn[i].classList.remove('selected');
+    }
+    btn[digits - 3].classList.add('selected');
+    numbers_to_guess = digits;
+}
+
+let answer = "";
+function settings_start() {
+    // Generate random answer with "numbers_to_guess" digits
+
+    if(allow_dupes) {
+        for(let i=0;i < numbers_to_guess;i++) {
+            answer += Math.floor(Math.random() * 9.9).toString();
+        }
+    }else {
+        // no dupes
+        let arr = [0,1,2,3,4,5,6,7,8,9];
+        shuffle(arr);
+        for(let i=0;i < numbers_to_guess;i++) {
+            answer += arr[i];
+        }
+    }
+
+    document.getElementById('settings').remove();
+
+    // empty boxes initializing
+    for(let i=0;i < numbers_to_guess;i++) {
+        display.appendChild(document.createElement("div"));
+    }
+    console.log(answer);
+}
+
+// The de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
+// See https://github.com/coolaj86/knuth-shuffle
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
+
+
 let btn = [];
 for(let i=0;i < 10;i++) {
     btn[i] = document.getElementById("btn_" + i)
@@ -20,23 +94,9 @@ function btn_clicked(evt) {
 
 
 
-let numbers_to_guess = 4; // number of numbers to guess
 let guess_field = "";
 let display = document.getElementById('display');
-document.getElementById('display').innerText = "";
-
-// empty boxes initializing
-for(let i=0;i < numbers_to_guess;i++) {
-    display.appendChild(document.createElement("div"));
-}
-
-
-
-// Generate random answer with "numbers_to_guess" digits
-let answer = "";
-for(let i=0;i < numbers_to_guess;i++) {
-    answer += Math.floor(Math.random() * 9.9).toString();
-}
+display.innerText = "";
 
 
 
@@ -180,6 +240,6 @@ String.prototype.replaceChar = function(index, replacement) {
 
 let end_message = document.getElementById('gg');
 function gameover() {
-    end_message.innerHTML = "Congratulations!<br>You did it!<br><br><br>Guess attempted: " + guess_count;
+    end_message.innerHTML = "Congratulations!<br>You did it!<br>The answer was: " + answer + "<br><br><br>Guess attempted: " + guess_count;
     end_message.style.display = 'block';
 }

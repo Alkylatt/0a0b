@@ -116,9 +116,8 @@ div.A {color: lawngreen !important; border-color: lawngreen !important;}
 
 
 
-#gg {
+#gg, #settings {
     position: absolute;
-    display: none;
     background-color: rgba(0,0,0,0.8);
     color: white;
     z-index: 999;
@@ -130,3 +129,29 @@ div.A {color: lawngreen !important; border-color: lawngreen !important;}
     padding-top: 20%;
     font-size: 24px;
 }
+
+#gg {
+    display: none;
+}
+#settings {
+    padding-top: 10% !important;
+}
+#settings span {
+    padding: 4px 8px;
+    border: white 1px solid;
+    border-radius: 10px;
+    display: inline-block;
+    min-width: 20px;
+}
+#settings_dupe span {
+    min-width: 300px;
+}
+#settings span:hover {
+    background-color: rgba(255,255,255,0.7);
+    color: #111;
+}
+#settings span.selected {
+    background-color: white;
+    color: #111;
+}
+
