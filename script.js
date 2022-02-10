@@ -105,7 +105,8 @@ function input(par) {
     if(par === 'del') {
         guess_field = guess_field.substring(0, guess_field.length-1);
     }else if(par === 'enter') {
-        check_answer(guess_field);
+        if(guess_field.length === numbers_to_guess)
+            check_answer(guess_field);
     }else {
         if(guess_field.length < numbers_to_guess)
             guess_field += par;
@@ -167,7 +168,7 @@ function tick() {
     if(keyMap["8"] && !cd['8']) input('8');
     if(keyMap["9"] && !cd['9']) input('9');
     if( (keyMap["Backspace"] || keyMap["Delete"]) && !cd['del']) input('del');
-    if(keyMap["Enter"] && (guess_field.length === numbers_to_guess) ) input('enter');
+    if(keyMap["Enter"]) input('enter');
 
     for(let i=0;i < 10;i++) {
         i = i.toString();
